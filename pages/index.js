@@ -24,14 +24,20 @@ const Home = () => {
   const [dangersValue, setDangersValue] = useState('');
   const [descriptionValue, setDescriptionValue] = useState('');
   const [activitiesValue, setActivitiesValue] = useState('');
+  const [imageValue, setImageValue] = useState('');
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    db.collection("cities").doc("LA").set({
-      name: "Los Angeles",
-      state: "CA",
-      country: "USA"
+    db.collection('campgrounds').add({
+      name: nameValue,
+      rating: `${ratingValue} / 5.0`,
+      image: imageValue,
+      temperature: `${temperatureValue}°`,
+      dangers: dangersValue,
+      description: descriptionValue,
+      activities: activitiesValue
     })
     .then(function() {
       console.log("Document successfully written!");
@@ -46,11 +52,14 @@ const Home = () => {
       <label>Name:</label>
       <input type="text" onChange={event => setNameValue(event.target.value)} />
       <br />
+      <label>Image URL:</label>
+      <input type="text" onChange={event => setImageValue(event.target.value)} />
+      <br />
       <label>Rating:</label>
-      <input rows="7" cols="50" type="text" onChange={event => setRatingValue(event.target.value)} />
+      <input rows="7" cols="50" type="text" onChange={event => setRatingValue(event.target.value)} /><label> / 5.0</label>
       <br />
       <label>Temperature:</label>
-      <input type="text" onChange={event => setTemperatureValue(event.target.value)} />
+      <input type="text" onChange={event => setTemperatureValue(event.target.value)} /><label> °</label>
       <br />
       <label>Dangers:</label>
       <input rows="7" cols="50" type="text" onChange={event => setDangersValue(event.target.value)} />
